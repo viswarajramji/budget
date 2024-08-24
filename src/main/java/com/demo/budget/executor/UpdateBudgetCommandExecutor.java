@@ -28,7 +28,7 @@ public class UpdateBudgetCommandExecutor implements CommandExecutor<UpdateBudget
 
         Budget budget = budgetRepository.findById(command.getId())
                 .orElseThrow(() -> new RuntimeException("Budget not found"));
-        budget.setCategory(command.getCategory());
+        budget.setExpenseType(command.getExpenseType());
         budget.setAmount(command.getAmount());
         return budgetRepository.save(budget);
     }

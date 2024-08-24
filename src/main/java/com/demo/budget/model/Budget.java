@@ -1,6 +1,6 @@
 package com.demo.budget.model;
 
-import com.demo.budget.enums.Category;
+import com.demo.budget.enums.ExpenseType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class Budget {
     private Long userId;  // Link to the user
 
     @Enumerated(EnumType.STRING)
-    private Category category;  // Use enum for category
+    private ExpenseType expenseType;  // Use enum for category
 
     private Double amount;
 

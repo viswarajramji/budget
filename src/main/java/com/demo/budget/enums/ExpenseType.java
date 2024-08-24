@@ -1,6 +1,6 @@
 package com.demo.budget.enums;
 
-public enum Category {
+public enum ExpenseType {
     GROCERIES,
     ENTERTAINMENT,
     UTILITIES,

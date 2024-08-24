@@ -29,7 +29,7 @@ public class CreateBudgetCommandExecutor implements CommandExecutor<CreateBudget
 
         Budget budget = new Budget();
         budget.setUserId(command.getUserId());
-        budget.setCategory(command.getCategory());
+        budget.setExpenseType(command.getExpenseType());
         budget.setAmount(command.getAmount());
         budget.setSpent(0.0);
         return budgetRepository.save(budget);

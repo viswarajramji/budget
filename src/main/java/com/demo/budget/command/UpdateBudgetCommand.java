@@ -1,7 +1,7 @@
 package com.demo.budget.command;
 
 import com.demo.budget.api.Command;
-import com.demo.budget.enums.Category;
+import com.demo.budget.enums.ExpenseType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class UpdateBudgetCommand implements Command {
     private Long id;
     private Long userId;
-    private Category category;
+    private ExpenseType expenseType;
     private Double amount;
 }
