@@ -1,12 +1,14 @@
 package com.demo.budget.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Service
 public class ExecutionContextFactory {
 
     private final Map<Class<? extends Command>, CommandExecutor<? extends Command, ?>> commandExecutors = new HashMap<>();
@@ -15,8 +17,7 @@ public class ExecutionContextFactory {
 
     @Autowired
     public ExecutionContextFactory(Map<String, CommandExecutor<? extends Command, ?>> commandExecutors,
-                                   Map<String, QueryExecutor<? extends Query, ?>> queryExecutors,
-                                   Map<String, EventExecutor<? extends Event>> eventExecutors) {
+                                   Map<String, QueryExecutor<? extends Query, ?>> queryExecutors) {
         // Register Command Executors
         for (CommandExecutor<? extends Command, ?> executor : commandExecutors.values()) {
             this.commandExecutors.put(getCommandClass(executor), executor);
@@ -27,7 +28,11 @@ public class ExecutionContextFactory {
             this.queryExecutors.put(getQueryClass(executor), executor);
         }
 
-        // Register Event Executors
+    }
+
+    @Autowired
+    @Lazy
+    public void setEventExecutors(Map<String, EventExecutor<? extends Event>> eventExecutors) {
         for (EventExecutor<? extends Event> executor : eventExecutors.values()) {
             this.eventExecutors.put(getEventClass(executor), executor);
         }

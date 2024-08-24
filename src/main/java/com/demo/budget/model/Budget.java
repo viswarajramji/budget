@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "budget", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"userId", "category"})
+        @UniqueConstraint(columnNames = {"userId", "expenseType"})
 })
 public class Budget {
 

@@ -30,4 +30,17 @@ public class UserValidationService {
             throw new RuntimeException("Error validating userId: " + userId, e);
         }
     }
+    public String getUserEmail(Long userId) {
+        try {
+            // The endpoint provided by the User Service to fetch the email
+            String url = "http://localhost:8080/users/api/query/" + userId + "/email";  // Replace with actual User Service URL
+            return restTemplate.getForObject(url, String.class);
+        } catch (HttpClientErrorException.NotFound e) {
+            // Handle the case where the user is not found
+            throw new IllegalArgumentException("User not found with userId: " + userId);
+        } catch (Exception e) {
+            // Handle other exceptions, such as connectivity issues
+            throw new RuntimeException("Error fetching email for userId: " + userId, e);
+        }
+    }
 }

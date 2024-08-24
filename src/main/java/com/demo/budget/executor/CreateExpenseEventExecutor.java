@@ -1,10 +1,14 @@
 package com.demo.budget.executor;
 
 import com.demo.budget.api.EventExecutor;
+import com.demo.budget.command.UpdateBudgetSpendAmountCommand;
+import com.demo.budget.enums.RecordType;
 import com.demo.budget.event.CreateExpenseEvent;
 import com.demo.budget.model.Budget;
 import com.demo.budget.repo.BudgetRepository;
+import com.demo.budget.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,27 +16,30 @@ import java.util.Optional;
 @Service
 public class CreateExpenseEventExecutor implements EventExecutor<CreateExpenseEvent> {
 
-    private final BudgetRepository budgetRepository;
+    private final BudgetService budgetService;
+
 
     @Autowired
-    public CreateExpenseEventExecutor(BudgetRepository budgetRepository) {
-        this.budgetRepository = budgetRepository;
+    public CreateExpenseEventExecutor(@Lazy  BudgetService budgetService) {
+        this.budgetService=budgetService;
     }
 
     @Override
     public void execute(CreateExpenseEvent event) {
-        // Retrieve the user's budget based on userId
-        Optional<Budget> budgetOpt = budgetRepository.findByUserIdAndExpenseType(event.getUserId(),event.getExpenseType());
-        if (budgetOpt.isEmpty()) {
-            throw new IllegalArgumentException("Budget not found for userId: " + event.getUserId());
-        }
+        // Create the command with the event data
+        UpdateBudgetSpendAmountCommand command = new UpdateBudgetSpendAmountCommand(
+                RecordType.CREATED,
+                event.getExpenseId(),
+                event.getUserId(),
+                event.getExpenseName(),
+                event.getExpenseDescription(),
+                event.getExpenseType(),
+                event.getAmount(),
+                event.getAmount()// Positive amount for creation
+        );
 
-        Budget budget = budgetOpt.get();
-        // Decrease the available budget by the expense amount
-        Double newSpentAmount = budget.getSpent() + event.getAmount();
-        budget.setSpent(newSpentAmount);
-        // Save the updated budget
-        budgetRepository.save(budget);
+        // Execute the command
+        budgetService.executeCommand(command);
     }
 }
 
