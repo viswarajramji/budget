@@ -1,6 +1,6 @@
 package com.demo.budget.command;
 
-import com.demo.budget.Command;
+import com.demo.budget.api.Command;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

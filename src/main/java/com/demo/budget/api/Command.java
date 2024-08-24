@@ -1,4 +1,4 @@
-package com.demo.budget;
+package com.demo.budget.api;
 
 public interface Command {
 }

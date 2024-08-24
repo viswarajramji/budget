@@ -1,6 +1,6 @@
 package com.demo.budget.executor;
 
-import com.demo.budget.CommandExecutor;
+import com.demo.budget.api.CommandExecutor;
 import com.demo.budget.command.UpdateBudgetCommand;
 import com.demo.budget.model.Budget;
 import com.demo.budget.repo.BudgetRepository;

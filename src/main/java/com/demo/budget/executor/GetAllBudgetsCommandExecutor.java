@@ -1,6 +1,6 @@
 package com.demo.budget.executor;
-import com.demo.budget.CommandExecutor;
-import com.demo.budget.command.GetAllBudgetsCommand;
+import com.demo.budget.api.QueryExecutor;
+import com.demo.budget.query.GetAllBudgetsQuery;
 import com.demo.budget.model.Budget;
 import com.demo.budget.repo.BudgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GetAllBudgetsCommandExecutor implements CommandExecutor<GetAllBudgetsCommand, List<Budget>> {
+public class GetAllBudgetsCommandExecutor implements QueryExecutor<GetAllBudgetsQuery, List<Budget>> {
 
     private final BudgetRepository budgetRepository;
 
@@ -19,7 +19,7 @@ public class GetAllBudgetsCommandExecutor implements CommandExecutor<GetAllBudge
     }
 
     @Override
-    public List<Budget> execute(GetAllBudgetsCommand command) {
+    public List<Budget> execute(GetAllBudgetsQuery command) {
         return budgetRepository.findAll();
     }
 }

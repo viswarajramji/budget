@@ -1,7 +1,8 @@
 package com.demo.budget.kafka;
-import com.demo.budget.Command;
-import com.demo.budget.CommandExecutor;
-import com.demo.budget.CommandExecutorFactory;
+
+import com.demo.budget.api.Event;
+import com.demo.budget.api.EventExecutor;
+import com.demo.budget.api.ExecutionContextFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaConsumer {
 
-    private final CommandExecutorFactory commandExecutorFactory;
+    private final ExecutionContextFactory executionContextFactory;
     private final ObjectMapper objectMapper;
 
-    public KafkaConsumer(CommandExecutorFactory commandExecutorFactory, ObjectMapper objectMapper) {
-        this.commandExecutorFactory = commandExecutorFactory;
+    public KafkaConsumer(ExecutionContextFactory executionContextFactory, ObjectMapper objectMapper) {
+        this.executionContextFactory = executionContextFactory;
         this.objectMapper = objectMapper;
     }
 
@@ -27,22 +28,22 @@ public class KafkaConsumer {
             JsonNode node = objectMapper.readTree(message);
 
             // Extract the commandType and payload
-            String commandType = node.get("commandType").asText();
+            String eventType = node.get("eventType").asText();
             JsonNode payload = node.get("payload");
 
             // Modify the commandType to replace the service name with "budget"
-            String regex = "(com\\.demo\\.)([a-zA-Z]+)(\\.command\\.)";
-            String modifiedCommandType = commandType.replaceAll(regex, "$1budget$3");
+            String regex = "(com\\.demo\\.)([a-zA-Z]+)(\\.event\\.)";
+            String modifiedEventType = eventType.replaceAll(regex, "$1budget$3");
 
             // Dynamically load the class based on the modified commandType
-            Class<? extends Command> commandClass = (Class<? extends Command>) Class.forName(modifiedCommandType);
+            Class<? extends Event> eventClass = (Class<? extends Event>) Class.forName(modifiedEventType);
 
             // Deserialize the payload to the appropriate Command subclass
-            Command command = objectMapper.treeToValue(payload, commandClass);
+            Event event = objectMapper.treeToValue(payload, eventClass);
 
             // Get the appropriate CommandExecutor and execute the command
-            CommandExecutor executor = commandExecutorFactory.getExecutor(command.getClass());
-            executor.execute(command);
+            EventExecutor executor = executionContextFactory.getEventExecutor(event.getClass());
+            executor.execute(event);
 
         } catch (Exception e) {
             e.printStackTrace();

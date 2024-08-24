@@ -19,7 +19,7 @@ public class UserValidationService {
     public boolean isValidUser(Long userId) {
         try {
             // Assuming the User Service has an endpoint like /api/users/{userId}
-            String url = "http://localhost:8080/users/" + userId;  // Replace with actual User Service URL
+            String url = "http://localhost:8080/users/api/query/" + userId;  // Replace with actual User Service URL
             restTemplate.getForObject(url, String.class);
             return true;
         } catch (HttpClientErrorException.NotFound e) {

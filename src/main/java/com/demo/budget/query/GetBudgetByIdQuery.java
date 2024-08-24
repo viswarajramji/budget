@@ -1,6 +1,6 @@
-package com.demo.budget.command;
+package com.demo.budget.query;
 
-import com.demo.budget.Command;
+import com.demo.budget.api.Query;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetBudgetByIdCommand implements Command {
+public class GetBudgetByIdQuery implements Query {
     private Long id;
 }
 
