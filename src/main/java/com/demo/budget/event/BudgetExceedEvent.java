@@ -15,12 +15,12 @@ public class BudgetExceedEvent implements Event {
     private Long userId;               // The ID of the user who owns the expense
     private String expenseName;        // The name of the expense
     private String expenseDescription; // A description of the expense
-    private ExpenseType expenseType;   // The type of the expense (e.g., FOOD, TRANSPORTATION, etc.)
+    private String expenseType;   // The type of the expense (e.g., FOOD, TRANSPORTATION, etc.)
     private Double amount;
     private Double actualAmount;          // The amount of the expense (positive or negative)
-    private RecordType recordType;
+    private String recordType;
     private Long budgetId;             // The ID of the budget
-    private ExpenseType budgetType;         // The type of the budget
+    private String budgetType;         // The type of the budget
     private Double budgetAmount;       // The total budget amount
     private Double budgetSpent;
     private String emailId;// The total amount spent from the budget
