@@ -5,6 +5,10 @@
 
 The Budget Management System is designed to handle budget creation, updates, deletion, and querying operations. The system leverages an event-driven architecture with Kafka for handling expense-related events and integrates with a relational database for persistence.
 
+## Sample output:
+
+![image](https://github.com/user-attachments/assets/f29a1a07-3521-4b96-820f-abd3468fe75b)
+
 ## Architecture Diagrams
 
 ### Event-Driven Flow
