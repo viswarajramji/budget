@@ -20,12 +20,16 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long userId;  // Link to the user
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Category budgetType;  // Use enum for category
 
+    @Column(nullable = false)
     private Double amount;
 
+    @Column(nullable = false)
     private Double spent;
 }

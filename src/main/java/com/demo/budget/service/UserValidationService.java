@@ -27,7 +27,7 @@ public class UserValidationService {
             return false;
         } catch (Exception e) {
             // Handle other exceptions such as connectivity issues
-            throw new RuntimeException("Error validating userId: " + userId, e);
+            throw new RuntimeException("User not found " + userId, e);
         }
     }
     public String getUserEmail(Long userId) {
@@ -40,7 +40,7 @@ public class UserValidationService {
             throw new IllegalArgumentException("User not found with userId: " + userId);
         } catch (Exception e) {
             // Handle other exceptions, such as connectivity issues
-            throw new RuntimeException("Error fetching email for userId: " + userId, e);
+            throw new RuntimeException("Failed fetching email for userId: " + userId, e);
         }
     }
 }
