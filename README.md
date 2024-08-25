@@ -281,7 +281,7 @@ To run the service locally:
 
 5. **Access the database** at `http://localhost:8082/h2-console`.
 
-**Note**: Ensure Kafka is running and the topic `userservice` is created.
+**Note**: Ensure Kafka is running and the topic `budgetservice` is created.
 
 ## Swagger Endpoint
 
