@@ -3,46 +3,26 @@
 
 ## Overview
 
-This budget management system is designed to handle budget creation, updates, deletion, and querying operations. The system leverages an event-driven architecture with Kafka for handling expense-related events and integrates with a relational database for persistence.
+The Budget Management System is designed to handle budget creation, updates, deletion, and querying operations. The system leverages an event-driven architecture with Kafka for handling expense-related events and integrates with a relational database for persistence.
 
-## Steps to Run the Application
+## Sample output:
 
-1. **Clone the Repository**:  
-   Clone the repository to your local machine using:
-   ```
-   git clone <repository-url>
-   ```
+![image](https://github.com/user-attachments/assets/f29a1a07-3521-4b96-820f-abd3468fe75b)
 
-2. **Navigate to the Project Directory**:  
-   Move into the project directory:
-   ```
-   cd <project-directory>
-   ```
+## Project Structure
 
-3. **Install Dependencies**:  
-   Install all necessary dependencies using Maven:
-   ```
-   mvn clean install
-   ```
+- `api`: Core API interfaces.
+- `command`: Classes encapsulating command details.
+- `controller`: REST controllers managing HTTP requests.
+- `event`: Event classes representing system actions.
+- `executors`: Business logic processors for commands.
+- `kafka`: Kafka message producers and consumers.
+- `model`: Business entity data models.
+- `query`: Data retrieval operations.
+- `repo`: Database interaction.
+- `service`: Business logic and service layer.
 
-4. **Set Up the Database**:  
-   Ensure your database is up and running. Update the database configurations in the `application.properties` or `application.yml` file as per your local setup.
-
-5. **Start Kafka**:  
-   Make sure Kafka is running. Configure the Kafka topics `budgetservice` and `notificationservice` as needed.
-
-6. **Run the Application**:  
-   Start the application using:
-   ```
-   mvn spring-boot:run
-   ```
-
-7. **Access the Application**:  
-   The application will be running on `http://localhost:8080`. You can interact with the budget management system via the exposed REST APIs.
-
-## Architecture Diagrams
-
-### Event-Driven Flow
+## Process Flow Diagram
 
 This diagram illustrates how various events consumed from Kafka are processed by the Budget Service, which subsequently updates the budget data and produces notifications if necessary.
 
@@ -79,9 +59,6 @@ graph TD
     BEE -->|Publish to 'notificationservice' Topic| KProd[Kafka Producer for Notification Service]
     KProd -->|Handle Notifications| NS[Notification Service]
     DUEE -->|Delete User Data| BR
-
-
-
 ```
 
 ### Command and Query Handling
@@ -106,7 +83,7 @@ graph TD
     UBE -->|Update in| BR
     DBE -->|Delete from| BR
 
-    BR --> BE[Budget Entity]
+    BR --> DB[(Budget Database)]
 
     QC[Budget Query Controller] -->|Get by User ID| GBUI[Get Budget By User ID Query]
     QC -->|Get All| GABQ[Get All Budgets Query]
@@ -120,7 +97,8 @@ graph TD
     GBUIE -->|Fetch from| BR
     GABQE -->|Fetch from| BR
 
-    BR <--> BE[Budget Entity]
+    BR <--> DB[(Budget Database)]
+
 ```
 
 ## Key Components
@@ -291,6 +269,35 @@ classDiagram
 
 Triggered when the spent amount exceeds the budget, leading to a notification being sent.
 
-## Conclusion
 
-This `README.md` provides an overview of the architecture, components, and data flow in the budget management system. The system is designed to handle budget-related operations efficiently using an event-driven approach for expense events and direct command handling for budget management tasks.
+## Getting Started
+
+To run the service locally:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/viswarajramji/budget.git
+   cd budget
+   ```
+
+2. **Build the application**:
+   ```bash
+   ./mvnw clean install
+   ```
+
+3. **Start the application**:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+4. **Access the application** at `http://localhost:8082`.
+
+5. **Access the database** at `http://localhost:8082/h2-console`.
+
+**Note**: Ensure Kafka is running and the topic `userservice` is created.
+
+## Swagger Endpoint
+
+Access the Swagger UI to interact with the API:
+
+- **URL**: `http://localhost:8082/swagger-ui.html`
