@@ -79,6 +79,9 @@ graph TD
     BEE -->|Publish to 'notificationservice' Topic| KProd[Kafka Producer for Notification Service]
     KProd -->|Handle Notifications| NS[Notification Service]
     DUEE -->|Delete User Data| BR
+
+
+
 ```
 
 ### Command and Query Handling
