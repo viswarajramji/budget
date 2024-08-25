@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetBudgetByIdQuery implements Query {
+public class GetBudgetByUserIdQuery implements Query {
     @NotNull
-    private Long id;
+    private Long userId;
 }
 
