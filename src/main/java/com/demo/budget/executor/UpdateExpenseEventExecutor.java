@@ -1,16 +1,12 @@
 package com.demo.budget.executor;
 import com.demo.budget.api.EventExecutor;
-import com.demo.budget.command.UpdateBudgetSpendAmountCommand;
+import com.demo.budget.command.UpdateBudgetSpendAmountInternalCommand;
 import com.demo.budget.enums.RecordType;
 import com.demo.budget.event.UpdateExpenseEvent;
-import com.demo.budget.model.Budget;
-import com.demo.budget.repo.BudgetRepository;
 import com.demo.budget.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UpdateExpenseEventExecutor implements EventExecutor<UpdateExpenseEvent> {
@@ -25,7 +21,7 @@ public class UpdateExpenseEventExecutor implements EventExecutor<UpdateExpenseEv
     @Override
     public void execute(UpdateExpenseEvent event) {
         // Create the command with the event data
-        UpdateBudgetSpendAmountCommand command = new UpdateBudgetSpendAmountCommand(
+        UpdateBudgetSpendAmountInternalCommand command = new UpdateBudgetSpendAmountInternalCommand(
                 RecordType.MODIFIED,
                 event.getExpenseId(),
                 event.getUserId(),

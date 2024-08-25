@@ -1,7 +1,7 @@
 package com.demo.budget.executor;
 
 import com.demo.budget.api.CommandExecutor;
-import com.demo.budget.command.UpdateBudgetSpendAmountCommand;
+import com.demo.budget.command.UpdateBudgetSpendAmountInternalCommand;
 import com.demo.budget.event.BudgetExceedEvent;
 import com.demo.budget.kafka.KafkaProducer;
 import com.demo.budget.model.Budget;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UpdateBudgetSpendAmountCommandExecutor implements CommandExecutor<UpdateBudgetSpendAmountCommand, Void> {
+public class UpdateBudgetSpendAmountCommandExecutor implements CommandExecutor<UpdateBudgetSpendAmountInternalCommand, Void> {
 
     private final BudgetRepository budgetRepository;
     private final UserValidationService userValidationService;
@@ -25,9 +25,9 @@ public class UpdateBudgetSpendAmountCommandExecutor implements CommandExecutor<U
     }
 
     @Override
-    public Void execute(UpdateBudgetSpendAmountCommand command) {
+    public Void execute(UpdateBudgetSpendAmountInternalCommand command) {
         // Fetch the budget for the user and specific expense type
-        Budget budget = budgetRepository.findByUserIdAndExpenseType(command.getUserId(), command.getExpenseType())
+        Budget budget = budgetRepository.findByUserIdAndBudgetType(command.getUserId(), command.getExpenseType())
                 .orElseThrow(() -> new IllegalArgumentException("Budget not found for userId: " + command.getUserId() + " and expenseType: " + command.getExpenseType()));
 
         // Update the spent amount by adding the command's amount
@@ -51,7 +51,7 @@ public class UpdateBudgetSpendAmountCommandExecutor implements CommandExecutor<U
                     command.getActualAmount(),
                     command.getRecordType().name(),
                     budget.getId(),
-                    budget.getExpenseType().name(),
+                    budget.getBudgetType().name(),
                     budget.getAmount(),
                     budget.getSpent(),
                     userEmail

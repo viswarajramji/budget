@@ -4,6 +4,7 @@ import com.demo.budget.model.Budget;
 import com.demo.budget.query.GetAllBudgetsQuery;
 import com.demo.budget.query.GetBudgetByIdQuery;
 import com.demo.budget.service.BudgetService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,9 @@ public class BudgetQueryController {
         this.budgetService = budgetService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Budget> getBudgetById(@PathVariable Long id) {
-        Budget result = budgetService.executeQuery(new GetBudgetByIdQuery(id));
+    @GetMapping("/{budgetId}")
+    public ResponseEntity<Budget> getBudgetById(@Valid  @PathVariable Long budgetId) {
+        Budget result = budgetService.executeQuery(new GetBudgetByIdQuery(budgetId));
         return ResponseEntity.ok(result);
     }
 

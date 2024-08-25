@@ -1,8 +1,6 @@
 package com.demo.budget.event;
 
 import com.demo.budget.api.Event;
-import com.demo.budget.enums.ExpenseType;
-import com.demo.budget.enums.RecordType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

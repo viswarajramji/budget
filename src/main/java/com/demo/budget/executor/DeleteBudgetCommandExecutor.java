@@ -18,7 +18,7 @@ public class DeleteBudgetCommandExecutor implements CommandExecutor<DeleteBudget
 
     @Override
     public Void execute(DeleteBudgetCommand command) {
-        budgetRepository.deleteById(command.getId());
+        budgetRepository.deleteById(command.getBudgetId());
         return null;
     }
 }

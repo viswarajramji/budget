@@ -23,12 +23,16 @@ public class UpdateBudgetCommandExecutor implements CommandExecutor<UpdateBudget
     @Override
     public Budget execute(UpdateBudgetCommand command) {
         if (!userValidationService.isValidUser(command.getUserId())) {
-            throw new IllegalArgumentException("Invalid userId: " + command.getUserId());
+            throw new RuntimeException("Invalid userId: " + command.getUserId());
         }
 
-        Budget budget = budgetRepository.findById(command.getId())
+        if (budgetRepository.findByUserIdAndBudgetType(command.getUserId(),command.getBudgetType()).isPresent()) {
+            throw new RuntimeException("Budget Type and User Id configuration exists for userId : " + command.getUserId());
+        }
+
+        Budget budget = budgetRepository.findById(command.getBudgetId())
                 .orElseThrow(() -> new RuntimeException("Budget not found"));
-        budget.setExpenseType(command.getExpenseType());
+        budget.setBudgetType(command.getBudgetType());
         budget.setAmount(command.getAmount());
         return budgetRepository.save(budget);
     }

@@ -1,6 +1,6 @@
 package com.demo.budget.repo;
 
-import com.demo.budget.enums.ExpenseType;
+import com.demo.budget.enums.Category;
 import com.demo.budget.model.Budget;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +12,5 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
 
     void deleteByUserId(Long userId);
 
-    Optional<Budget> findByUserIdAndExpenseType(Long userId, ExpenseType expenseType);
+    Optional<Budget> findByUserIdAndBudgetType(Long userId, Category expenseType);
 }

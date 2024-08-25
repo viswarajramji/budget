@@ -24,12 +24,16 @@ public class CreateBudgetCommandExecutor implements CommandExecutor<CreateBudget
     @Override
     public Budget execute(CreateBudgetCommand command) {
         if (!userValidationService.isValidUser(command.getUserId())) {
-            throw new IllegalArgumentException("Invalid userId: " + command.getUserId());
+            throw new RuntimeException("Invalid userId: " + command.getUserId());
+        }
+
+        if (budgetRepository.findByUserIdAndBudgetType(command.getUserId(),command.getBudgetType()).isPresent()) {
+            throw new RuntimeException("Budget Type and User Id configuration exists : " + command.getUserId());
         }
 
         Budget budget = new Budget();
         budget.setUserId(command.getUserId());
-        budget.setExpenseType(command.getExpenseType());
+        budget.setBudgetType(command.getBudgetType());
         budget.setAmount(command.getAmount());
         budget.setSpent(0.0);
         return budgetRepository.save(budget);
