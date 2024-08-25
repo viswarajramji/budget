@@ -9,9 +9,20 @@ The Budget Management System is designed to handle budget creation, updates, del
 
 ![image](https://github.com/user-attachments/assets/f29a1a07-3521-4b96-820f-abd3468fe75b)
 
-## Architecture Diagrams
+## Project Structure
 
-### Event-Driven Flow
+- `api`: Core API interfaces.
+- `command`: Classes encapsulating command details.
+- `controller`: REST controllers managing HTTP requests.
+- `event`: Event classes representing system actions.
+- `executors`: Business logic processors for commands.
+- `kafka`: Kafka message producers and consumers.
+- `model`: Business entity data models.
+- `query`: Data retrieval operations.
+- `repo`: Database interaction.
+- `service`: Business logic and service layer.
+
+## Process Flow Diagram
 
 This diagram illustrates how various events consumed from Kafka are processed by the Budget Service, which subsequently updates the budget data and produces notifications if necessary.
 
