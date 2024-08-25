@@ -22,10 +22,7 @@ public class UserValidationService {
             String url = "http://localhost:8080/users/api/query/" + userId;  // Replace with actual User Service URL
             restTemplate.getForObject(url, String.class);
             return true;
-        } catch (HttpClientErrorException.NotFound e) {
-            // User not found in the User Service
-            return false;
-        } catch (Exception e) {
+        }  catch (Exception e) {
             // Handle other exceptions such as connectivity issues
             throw new RuntimeException("User not found " + userId, e);
         }
@@ -35,10 +32,7 @@ public class UserValidationService {
             // The endpoint provided by the User Service to fetch the email
             String url = "http://localhost:8080/users/api/query/" + userId + "/email";  // Replace with actual User Service URL
             return restTemplate.getForObject(url, String.class);
-        } catch (HttpClientErrorException.NotFound e) {
-            // Handle the case where the user is not found
-            throw new IllegalArgumentException("User not found with userId: " + userId);
-        } catch (Exception e) {
+        }  catch (Exception e) {
             // Handle other exceptions, such as connectivity issues
             throw new RuntimeException("Failed fetching email for userId: " + userId, e);
         }
